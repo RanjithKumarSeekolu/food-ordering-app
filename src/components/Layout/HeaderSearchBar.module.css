@@ -1,0 +1,36 @@
+.form__control{
+    display: flex;
+}
+
+.form__control > input{
+    height: 50px;
+    padding-left: 10px;
+    border-radius: 25px;
+    width: 300px;
+    font-size: 16px;
+    margin-top: 2px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: gray;
+}
+
+.form__control >input:active{
+    border:none;
+}
+
+.form__control >input::placeholder{
+    font-size: 20px;
+    font-family: Roboto,Arial;
+}
+
+.form__control > button{
+    height: 50px;
+    padding: 0px 20px;
+    border-radius: 20px;
+    border-style: none;
+    margin-top: 2px;
+}
+.form__control >button >img{
+    cursor: pointer;
+    height: 15px;
+}

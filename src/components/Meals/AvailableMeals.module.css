@@ -4,7 +4,17 @@
     margin: 2rem auto;
     animation: meals-appear 1s ease-out forwards;
   }
+
+  .MealsIsLoading{
+    text-align: center;
+    color: white;
+  }
   
+  .MealsError{
+    text-align: center;
+    color: red;
+  }
+
   .meals ul {
     list-style: none;
     margin: 0;
@@ -21,4 +31,36 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+
+  .pagination {
+    padding: 10px;
+    margin: 15px 0px;
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid gray; */
+  }
+  
+  .pagination > span{
+    padding: 5px 20px;
+    /* border: 1px solid gray; */
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+  .pagination > span:hover{
+    /* background-color:#dd9d61; */
+    /* background-color: #ad5502; */
+    background-color: #641e03;
+    color: white;
+
+  }
+  
+  .pagination__disable{
+    opacity: 0;
+  }
+  
+  .pagination__selected{
+    background-color: rgb(220, 220, 220);
   }
