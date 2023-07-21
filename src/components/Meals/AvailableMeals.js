@@ -1,125 +1,147 @@
-import Card from '../UI/Card';
-import MealItem from './MealItem/MealItem';
-import classes from './AvailableMeals.module.css';
-import React,{ useContext, useEffect,useState } from 'react';
-import cartContext from '../../store/cart-context';
-
-// const DUMMY_MEALS = [
-//   {
-//     id: 'm1',
-//     name: 'Sushi',
-//     description: 'Finest fish and veggies',
-//     price: 22.99,
-//   },
-//   {
-//     id: 'm2',
-//     name: 'Schnitzel',
-//     description: 'A german specialty!',
-//     price: 16.5,
-//   },
-//   {
-//     id: 'm3',
-//     name: 'Barbecue Burger',
-//     description: 'American, raw, meaty',
-//     price: 12.99,
-//   },
-//   {
-//     id: 'm4',
-//     name: 'Green Bowl',
-//     description: 'Healthy...and green...',
-//     price: 18.99,
-//   },
-// ];
+import Card from "../UI/Card";
+import MealItem from "./MealItem/MealItem";
+import classes from "./AvailableMeals.module.css";
+import React, { useContext, useEffect, useState } from "react";
+import cartContext from "../../store/cart-context";
 
 const AvailableMeals = () => {
-  const [meals,setMeals]=useState([]);
-  const [isLoading,setIsLoading]=useState(true);
-  const [httpError,setHttpError]=useState();
+  const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [httpError, setHttpError] = useState();
   const [page, setPage] = useState(1);
-  const [searchInput,setSearchInput]=useState('');
+  const [searchInput, setSearchInput] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
 
-  const cartCtx=useContext(cartContext);
-  
-  console.log(searchInput);
-  const searchChange=(e)=>{
+  const cartCtx = useContext(cartContext);
+
+  const itemsPerPage = 4;
+  const totalPages = Math.ceil(meals.length / itemsPerPage);
+
+  const searchChange = (e) => {
     setSearchInput(e.target.value);
-  }
-  cartCtx.searchChangeHandler=searchChange;
-  useEffect(()=>{
-    const fetchMeals=async ()=>{
-      const response= await fetch('https://react-http-94dfa-default-rtdb.firebaseio.com/meals.json/');
-      // const response=await res.json();
-      if(!response.ok){
-        throw new Error('Something went wrong');
-      }
-      const responseData=await response.json();
+  };
+  cartCtx.searchChangeHandler = searchChange;
 
-      const loadedMeals=[];
+  useEffect(() => {
+    const fetchMeals = async () => {
+      try {
+        const response = await fetch(
+          "https://react-http-94dfa-default-rtdb.firebaseio.com/meals.json/"
+        );
 
-      for(const key in responseData){
-        loadedMeals.push({
-          id: key,
-          name: responseData[key].name,
-          description: responseData[key].description,
-          price: responseData[key].price
-        });
+        if (!response.ok) {
+          throw new Error("Something went wrong");
+        }
+
+        const responseData = await response.json();
+
+        const loadedMeals = [];
+
+        for (const key in responseData) {
+          loadedMeals.push({
+            id: key,
+            name: responseData[key].name,
+            description: responseData[key].description,
+            price: responseData[key].price,
+          });
+        }
+        setMeals(loadedMeals);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        setHttpError(error.message);
       }
-      setMeals(loadedMeals);
     };
-    fetchMeals().catch(error=>{
-      setIsLoading(false);
-      setHttpError(error.message);
-    });
-    setIsLoading(false);
-  },[])
-
-  if(isLoading){
-    return <section className={classes.MealsIsLoading}>
-      <p>loading...</p>
-    </section>
-  }
-
-  if(httpError){
-    return <section className={classes.MealsError}>
-      <p>{httpError}</p>
-    </section>
-  }
-  const mealsList=meals.filter((meal)=>{
-    return searchInput===''?meal:meal.name.toLowerCase().includes(searchInput.toLocaleLowerCase())
-  }).map((meal)=>(
-        <MealItem
-          key={meal.id}
-          id={meal.id}
-          name={meal.name}
-          description={meal.description}
-          price={meal.price}
-        />
-      ));
-
+    fetchMeals();
+  }, []);
 
   const selectPageHandler = (selectedPage) => {
-    if (selectedPage >= 1 && selectedPage <= meals.length / 4 && selectedPage !== page) {
-      setPage(selectedPage)
+    if (
+      selectedPage >= 1 &&
+      selectedPage <= totalPages &&
+      selectedPage !== page
+    ) {
+      setPage(selectedPage);
     }
+  };
+
+  const sortMealsHandler = (order) => {
+    setSortOrder(order);
+  };
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = page * itemsPerPage;
+
+  let sortedMeals = [...meals];
+
+  if (sortOrder === "asc") {
+    sortedMeals.sort((a, b) => a.price - b.price);
+  } else if (sortOrder === "desc") {
+    sortedMeals.sort((a, b) => b.price - a.price);
   }
 
-  const pagination=<React.Fragment>{meals.length>0 && <div className={classes.pagination}>
-    <span className={page > 1 ? "" : classes.pagination__disable} onClick={()=>selectPageHandler(page-1)}>◀</span>
-    {[...Array(meals.length/4)].map((_,i)=>{
-      return <span className={page === i + 1 ? classes.pagination__selected : ""} onClick={()=>selectPageHandler(i+1)} key={i}>
-        {i+1}
-        </span>
-    })}
-    <span className={page < meals.length / 4 ? "" : classes.pagination__disable} onClick={()=>selectPageHandler(page + 1)}>▶</span>
-  </div>}
-  </React.Fragment>
+  const mealsList = sortedMeals
+    .filter((meal) =>
+      searchInput === ""
+        ? true
+        : meal.name.toLowerCase().includes(searchInput.toLowerCase())
+    )
+    .slice(startIndex, endIndex)
+    .map((meal) => (
+      <MealItem
+        key={meal.id}
+        id={meal.id}
+        name={meal.name}
+        description={meal.description}
+        price={meal.price}
+      />
+    ));
 
   return (
     <section className={classes.meals}>
       <Card>
-        <ul>{mealsList}</ul>
-        {pagination}
-      </Card> 
+        <div className={classes.sort}>
+          <label htmlFor="sortOrder">Sort by:</label>
+          <select
+            id="sortOrder"
+            value={sortOrder}
+            onChange={(e) => sortMealsHandler(e.target.value)}
+          >
+            <option value="asc">Lowest Price</option>
+            <option value="desc">Highest Price</option>
+          </select>
+        </div>
+        {isLoading && <p className={classes.loading}>Loading...</p>}
+        {httpError && <p className={classes.error}>{httpError}</p>}
+        {!isLoading && !httpError && (
+          <React.Fragment>
+            <ul>{mealsList}</ul>
+            <div className={classes.pagination}>
+              <span
+                className={page > 1 ? "" : classes.pagination__disable}
+                onClick={() => selectPageHandler(page - 1)}
+              >
+                ◀
+              </span>
+              {[...Array(totalPages)].map((_, i) => (
+                <span
+                  className={page === i + 1 ? classes.pagination__selected : ""}
+                  onClick={() => selectPageHandler(i + 1)}
+                  key={i}
+                >
+                  {i + 1}
+                </span>
+              ))}
+              <span
+                className={page < totalPages ? "" : classes.pagination__disable}
+                onClick={() => selectPageHandler(page + 1)}
+              >
+                ▶
+              </span>
+            </div>
+          </React.Fragment>
+        )}
+      </Card>
     </section>
   );
 };

@@ -1,66 +1,95 @@
 .meals {
-    max-width: 60rem;
-    width: 90%;
-    margin: 2rem auto;
-    animation: meals-appear 1s ease-out forwards;
-  }
+  max-width: 60rem;
+  width: 90%;
+  margin: 2rem auto;
+  animation: meals-appear 1s ease-out forwards;
+}
 
-  .MealsIsLoading{
-    text-align: center;
-    color: white;
-  }
-  
-  .MealsError{
-    text-align: center;
-    color: red;
-  }
+.MealsIsLoading {
+  text-align: center;
+  color: white;
+}
 
-  .meals ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  @keyframes meals-appear {
-    from {
-      opacity: 0;
-      transform: translateY(3rem);
-    }
-  
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+.MealsError {
+  text-align: center;
+  color: red;
+}
 
+.meals ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  .pagination {
-    padding: 10px;
-    margin: 15px 0px;
-    display: flex;
-    justify-content: center;
-    /* border: 1px solid gray; */
-  }
-  
-  .pagination > span{
-    padding: 5px 20px;
-    /* border: 1px solid gray; */
-    cursor: pointer;
-    border-radius: 3px;
-  }
-
-  .pagination > span:hover{
-    /* background-color:#dd9d61; */
-    /* background-color: #ad5502; */
-    background-color: #641e03;
-    color: white;
-
-  }
-  
-  .pagination__disable{
+@keyframes meals-appear {
+  from {
     opacity: 0;
+    transform: translateY(3rem);
   }
-  
-  .pagination__selected{
-    background-color: rgb(220, 220, 220);
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+.pagination {
+  padding: 10px;
+  margin: 15px 0px;
+  display: flex;
+  justify-content: center;
+  /* border: 1px solid gray; */
+}
+
+.pagination > span {
+  padding: 5px 20px;
+  /* border: 1px solid gray; */
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.pagination > span:hover {
+  /* background-color:#dd9d61; */
+  /* background-color: #ad5502; */
+  background-color: #641e03;
+  color: white;
+}
+
+.pagination__disable {
+  opacity: 0;
+}
+
+.pagination__selected {
+  background-color: rgb(220, 220, 220);
+}
+
+.sort {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin-bottom: 0.5rem;
+}
+
+.sort label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.sort select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.sort select:hover,
+.sort select:focus {
+  border-color: #333;
+}
+
+.sort option {
+  font-size: 1rem;
+}
