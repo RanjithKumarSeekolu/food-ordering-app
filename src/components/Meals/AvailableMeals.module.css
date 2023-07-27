@@ -1,4 +1,6 @@
 .meals {
+  /* position: relative; /*added this line*/
+  /* top: -150px; added this line */
   max-width: 60rem;
   width: 90%;
   margin: 2rem auto;
@@ -51,7 +53,7 @@
 .pagination > span:hover {
   /* background-color:#dd9d61; */
   /* background-color: #ad5502; */
-  background-color: #641e03;
+  background-color: #ec3437;
   color: white;
 }
 

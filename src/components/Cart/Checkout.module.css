@@ -1,6 +1,6 @@
 .form {
   margin: 1rem;
-  height: 10rem;
+  height: 20rem;
   overflow: auto;
 }
 
@@ -30,12 +30,12 @@
 
 .actions button {
   font: inherit;
-  color: #5a1a01;
+  color: #ec3437;
   cursor: pointer;
   background-color: transparent;
   border: none;
   border-radius: 25px;
-  padding: 0.5rem 2rem; 
+  padding: 0.5rem 2rem;
 }
 
 .actions button:hover,
@@ -44,14 +44,14 @@
 }
 
 .actions .submit {
-  border: 1px solid #5a1a01;
-  background-color: #5a1a01;
+  border: 1px solid #ec3437;
+  background-color: #ec3437;
   color: white;
 }
 
 .actions .submit:hover,
 .actions .submit:active {
-  background-color: #7a2706;
+  background-color: #ec3437;
 }
 
 .invalid label {
@@ -59,10 +59,10 @@
 }
 
 .invalid input {
-  border-color: #aa0b20;
+  border-color: #ec3437;
   background-color: #ffeff1;
 }
 
-.control p{
-  color:  #ca3e51;
+.control p {
+  color: #ca3e51;
 }

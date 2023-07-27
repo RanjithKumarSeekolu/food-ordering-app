@@ -1,36 +1,36 @@
-.form__control{
-    display: flex;
+/* Updated CSS styles for the search bar */
+/* .form__control {
+  position: absolute;
+  top: 120px;
+  left: 25%;
+  right: 50%;
+} */
+
+.form__control > input {
+  box-sizing: border-box;
+  /* width: 500px; */
+  height: 50px;
+  padding-left: 40px; /* Increased padding to make space for the icon */
+  border: 1px solid gray;
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+  background-color: transparent;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.form__control > input{
-    height: 50px;
-    padding-left: 10px;
-    border-radius: 25px;
-    width: 300px;
-    font-size: 16px;
-    margin-top: 2px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: gray;
+.form__control > input::placeholder {
+  font-size: 16px;
+  font-family: Roboto, Arial;
+  color: #888; /* Placeholder color */
 }
 
-.form__control >input:active{
-    border:none;
+/* Updated styles for active/focused state */
+.form__control > input:focus {
+  border-color: #f9a2a4;
+  box-shadow: 0 0 5px #ec3437(0, 123, 255, 0.5);
 }
 
-.form__control >input::placeholder{
-    font-size: 20px;
-    font-family: Roboto,Arial;
-}
-
-.form__control > button{
-    height: 50px;
-    padding: 0px 20px;
-    border-radius: 20px;
-    border-style: none;
-    margin-top: 2px;
-}
-.form__control >button >img{
-    cursor: pointer;
-    height: 15px;
+.form__control > input:focus::placeholder {
+  color: #bbb; /* Placeholder color when input is focused */
 }
