@@ -43,6 +43,7 @@ const AvailableMeals = () => {
             name: responseData[key].name,
             description: responseData[key].description,
             price: responseData[key].price,
+            rating: responseData[key].rating,
           });
         }
         setMeals(loadedMeals);
@@ -78,6 +79,10 @@ const AvailableMeals = () => {
     sortedMeals.sort((a, b) => a.price - b.price);
   } else if (sortOrder === "desc") {
     sortedMeals.sort((a, b) => b.price - a.price);
+  } else if (sortOrder === "highest-rating") {
+    sortedMeals.sort((a, b) => b.rating - a.rating);
+  } else if (sortOrder === "lowest-rating") {
+    sortedMeals.sort((a, b) => a.rating - b.rating);
   }
 
   const mealsList = sortedMeals
@@ -94,6 +99,7 @@ const AvailableMeals = () => {
         name={meal.name}
         description={meal.description}
         price={meal.price}
+        rating={meal.rating}
       />
     ));
 
@@ -109,6 +115,8 @@ const AvailableMeals = () => {
           >
             <option value="asc">Lowest Price</option>
             <option value="desc">Highest Price</option>
+            <option value="highest-rating">Highest Price</option>
+            <option value="lowest-rating">Lowest Price</option>
           </select>
         </div>
         {isLoading && <p className={classes.loading}>Loading...</p>}

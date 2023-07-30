@@ -1,0 +1,23 @@
+.rating {
+  display: inline-block;
+  font-size: 0; /* Remove any whitespace between the stars */
+}
+
+.star {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-size: cover;
+}
+
+.star-full {
+  background-image: url("path/to/full-star-icon.png");
+}
+
+.star-half {
+  background-image: url("path/to/half-star-icon.png");
+}
+
+.star-empty {
+  background-image: url("path/to/empty-star-icon.png");
+}
